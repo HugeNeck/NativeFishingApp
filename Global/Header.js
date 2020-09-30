@@ -1,13 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import fishIcon from '../assets/fishIcon.jpg'
 
 export default function Header(props) {
 
     return(
-        <View>
-        <Text>Current Fisher: {props.fisher}</Text>
-        <Text onChange={props.handleFisherChange}>Input Here</Text>
+        <View>    
+        <TouchableOpacity onPress={()=>props.setFisher("JOEL")}>
+            <Text>
+                Current Fisher: {props.currentFisher}
+            </Text>
+        </TouchableOpacity>       
         </View>
     )
-
 }
+
+const styles = StyleSheet.create({
+    image: {
+        height:100,
+        width: 100
+    }
+})
