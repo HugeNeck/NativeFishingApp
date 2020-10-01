@@ -13,7 +13,7 @@ const Home = (props) => {
   
     return (
         <ScreenContainer>
-        <Header
+        <Header   
         navigation = {props.navigation}
         // chooseFisher={() => props.navigation.navigate("ChooseFisher",{
         //     currentFisher: currentFisher,
@@ -23,8 +23,11 @@ const Home = (props) => {
         setFisher={setCurrentFisher}/>
         <Text>Welcome To the LiveWell App!</Text>  
         <Button
-        title="Go to LiveWell"
-        onPress={()=> props.navigation.navigate("LiveWell")} />
+            title="Go to LiveWell"
+            onPress={()=> props.navigation.navigate("LiveWell")} />
+        <Button
+            title="Replace Fish in Well"
+            onPress={()=> props.navigation.navigate("Replace")} />
         </ScreenContainer>   
     )
 }
