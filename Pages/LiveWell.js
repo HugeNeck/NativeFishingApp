@@ -5,12 +5,13 @@ import LiveWellData from '../assets/LiveWellData'
 
 export default function LiveWell(){
     return(
-    <FlatList 
+    <FlatList
         keyExtractor= {fish => fish.id.toString()}
         data= {LiveWellData}
         renderItem = { ({item}) => {
         return <Text>{item.fishType}</Text>
         }}
     />
-)
+    )
 }
+

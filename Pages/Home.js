@@ -1,22 +1,32 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, StyleSheet, Text, Button} from 'react-native';
+import { ScreenContainer } from 'react-native-screens';
 import Header from '../Global/Header'
 
 const Home = (props) => {
     
-  const [currentFisher, setCurrentFisher] = useState('None Picked')
+    const [currentFisher, setCurrentFisher] = useState('None Picked')
 
-  function handleFisherChange(e){
-      setCurrentFisher(e)
-  }
-
+    // function handleFisherChange(e){
+    //     setCurrentFisher(e)
+    // }
+  
     return (
-        <View>
-        <Header currentFisher={currentFisher} setFisher={handleFisherChange}/>
+        <ScreenContainer>
+        <Header
+        navigation = {props.navigation}
+        // chooseFisher={() => props.navigation.navigate("ChooseFisher",{
+        //     currentFisher: currentFisher,
+        //     setFisher: setCurrentFisher
+        // })}
+        currentFisher={currentFisher}
+        setFisher={setCurrentFisher}/>
         <Text>Welcome To the LiveWell App!</Text>  
-        </View>   
+        <Button
+        title="Go to LiveWell"
+        onPress={()=> props.navigation.navigate("LiveWell")} />
+        </ScreenContainer>   
     )
 }
-
 
 export default Home

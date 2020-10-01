@@ -1,13 +1,15 @@
 import React from 'react';
-import { StyleSheet, Button, TextInput, View} from 'react-native';
+import { StyleSheet, TextInput, View} from 'react-native';
 
+const ChooseFisher = ({route}) => {
+    const {currentFisher} = route.params
+    const {setFisher} = route.params
 
-const ChooseFisher = (props) => {
     return (
         <View>
             <TextInput style = {styles.textStyle}
-            defaultValue = "ADD FISHER"
-            value=  {props.fisher}/>    
+            defaultValue={currentFisher}
+            onChangeText={setFisher}/>
         </View>
     )
 }
