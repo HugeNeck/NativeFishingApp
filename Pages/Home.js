@@ -18,7 +18,7 @@ const Home = (props) => {
         // })}
         currentFisher={currentFisher}
         setFisher={setCurrentFisher}/>
-        <Text>Welcome To the LiveWell App!</Text>  
+        <Text style={styles.text}>Welcome To the LiveWell App!</Text>  
         <View style={styles.screenContainer}>
         <Image style={styles.image} source = {fishIcon} title="That's a Beauty"/>
         <View style={styles.space} />
@@ -48,6 +48,11 @@ const styles = StyleSheet.create({
     image: {
         height: 100,
         width: 160,
+    },
+    text: {
+        fontWeight: "bold" ,
+        fontSize: 20,
+        color: 'red'
     }
 })
 
