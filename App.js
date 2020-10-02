@@ -32,8 +32,10 @@ const combinedDefaultTheme = {
 
   const Stack = createStackNavigator();
 
+
   const App = () => {
 
+   
     return(
     <PaperProvider theme={combinedDefaultTheme}>
       <NavigationContainer theme = {combinedDefaultTheme}>
@@ -41,8 +43,9 @@ const combinedDefaultTheme = {
           <Stack.Screen 
               name="Home"
               component={Home} 
-              // options={{ title: 
-              //     <Header currentFisher={currentFisher} setFisher={handleFisherChange}/>}}  
+              options={{ title: 
+                  'test'}
+              } 
               />
           <Stack.Screen 
               name="LiveWell"
