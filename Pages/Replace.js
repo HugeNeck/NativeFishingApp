@@ -36,7 +36,7 @@ export default function Replace(props) {
                           </Picker>
                     <Text>Size of Fish in Inches:</Text>
                     <TextInput 
-                          style={styles.input}
+                        style={styles.input}
                         value={fishLength}
                         onChangeText={setFishLength}/>              
                     <Text>Weight of Fish in Pounds:</Text>
@@ -55,7 +55,6 @@ export default function Replace(props) {
 
     const styles = StyleSheet.create({
         input: {
-          flex: 1,
           backgroundColor: '#ffffff'
         }
     })

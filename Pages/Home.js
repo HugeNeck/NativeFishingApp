@@ -9,7 +9,7 @@ const Home = (props) => {
     const [currentFisher, setCurrentFisher] = useState('None Picked')
 
     return (
-        <ScreenContainer>
+        <ScreenContainer style={styles.screenContainer}>
         <Header   
         navigation = {props.navigation}
         // chooseFisher={() => props.navigation.navigate("ChooseFisher",{
@@ -19,7 +19,7 @@ const Home = (props) => {
         currentFisher={currentFisher}
         setFisher={setCurrentFisher}/>
         <Text style={styles.text}>Welcome To the LiveWell App!</Text>  
-        <View style={styles.screenContainer}>
+        <View >
         <Image style={styles.image} source = {fishIcon} title="That's a Beauty"/>
         <View style={styles.space} />
         <Button
