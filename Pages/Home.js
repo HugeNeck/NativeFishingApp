@@ -3,6 +3,7 @@ import {View, StyleSheet, Text, Button, Image} from 'react-native';
 import { ScreenContainer } from 'react-native-screens';
 import Header from '../Global/Header';
 import fishIcon from '../assets/fishIcon.jpg'
+import styles from '../assets/styles'
 
 const Home = (props) => {
     
@@ -33,27 +34,5 @@ const Home = (props) => {
         </ScreenContainer>   
     )
 }
-
-const styles = StyleSheet.create({
-    screenContainer: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: 'center',
-      padding: 16
-    },
-    space: {
-        height: 10, 
-        width: 10
-    },
-    image: {
-        height: 100,
-        width: 160,
-    },
-    text: {
-        fontWeight: "bold" ,
-        fontSize: 20,
-        color: 'red'
-    }
-})
 
 export default Home
