@@ -11,6 +11,23 @@ import ChooseFisher from'./Pages/ChooseFisher'
 import Replace from './Pages/Replace'
 
 
+
+// import firebase from 'firebase/app';
+// import 'firebase/storage'
+// import 'firebase/database'
+//   // Set the configuration for your app
+//   // TODO: Replace with your project's config object
+//   var config = {
+//     apiKey: "AIzaSyAof-ZK4ea9TXcP_5zmVWD1ZMJSvrR8mHw",
+//     authDomain: "fishingapp-36472.firebaseapp.com",
+//     databaseURL: "https://fishingapp-36472.firebaseio.com",
+//     storageBucket: "gs://fishingapp-36472.appspot.com"
+//   };
+//   firebase.initializeApp(config);
+
+  // Get a reference to the database service
+//var database = firebase.database();
+
 const combinedDarkTheme = {
   ...PaperDarkTheme,
   ...NavigationDarkTheme,
