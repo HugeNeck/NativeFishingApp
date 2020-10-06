@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import { Button, Text, TextInput, View} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import LiveWellData from '../assets/LiveWellData';
 import PicTaker from '../assets/PicTaker'
@@ -8,10 +8,12 @@ import * as ImagePicker from 'expo-image-picker';
 import firebase from 'firebase/app';
 import 'firebase/firebase-storage'
 
+import Header from '../Global/Header';
+
   // Get a reference to the database service
   // var database = firebase.database();
 
-export default function Replace() {
+export default function Replace({navigation}) {
 
     const [weatherData, setWeatherData] = useState('Loading')
 
@@ -22,7 +24,7 @@ export default function Replace() {
     async function handleSubmit(){
         let result = await ImagePicker.launchCameraAsync();
         if (!result.cancelled) {
-            uploadImage(result.uri, "testImage")
+            uploadImage(result.uri, "testImage3")
             .then( () => {
                 console.log("SUCCESS")
             })
@@ -44,20 +46,32 @@ export default function Replace() {
             fetch("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=json&units=metric%22")
             .then(response => response.json())
             .then(data => {
+                if(data.cod !== 200)
                     setWeatherData(data.cod)
+                else setWeatherData(data.weather[0].description)
             })
     })
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: () => (
+                <Header path={ () => navigation.navigate("ChooseFisher")} />
+            ) 
+        })
+    })
                 return(
-                    <View>
-                        <Text>Choose a Fish</Text>
-                            <Picker
-                            style={styles.input}
-                             onValueChange={ (value, index) =>setFishType(value)} selectedValue= {fishType}>         
+                    <View style={styles.replaceScreenContainer}>    
+                        <Text>Choose a Fish</Text>         
+                        <View>     
+                            <Picker style={styles.picker} 
+                              onValueChange={ (value, index) =>setFishType(value)}
+                              selectedValue= {fishType}>         
                                 {LiveWellData.map(fish => 
-                                <Picker.Item 
-                                key = {fish.fishType} label={fish.fishType}  value={fish.fishType} /> 
+                                <Picker.Item  
+                                key= {fish.fishType} label={fish.fishType}  value={fish.fishType} /> 
                                 )}             
-                          </Picker>
+                          </Picker>    
+                    </View>   
                     <Text>Size of Fish in Inches:</Text>
                     <TextInput 
                         style={styles.input}
@@ -74,10 +88,10 @@ export default function Replace() {
                         onChangeText={setFishWeight}/>             
                     <Text>Take or Upload Picture: </Text>                             
                     <PicTaker/>    
-                    <Text>Current Weather:{weatherData}</Text>
-                    <Button title= "Take New Picture" onPress = {handleSubmit}/>      
+                    <View style={styles.space} />
+                    <Button title= "Take New Picture" onPress = {handleSubmit}/>
+                    <View style={styles.space} />       
+                    <Text>Current Weather:{weatherData}</Text>     
                     </View>
                 )
     }
-
-

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, TextInput, View} from 'react-native';
 
-const ChooseFisher = ({route}) => {
-    const {currentFisher} = route.params
-    const {setFisher} = route.params
+import {CurrentFisherContext} from '../assets/CurrentFisher'
+
+const ChooseFisher = () => {
+
+    const [currentFisher, setFisher] = useContext(CurrentFisherContext);
 
     return (
         <View>

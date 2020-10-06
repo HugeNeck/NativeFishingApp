@@ -1,11 +1,19 @@
 import 'react-native-gesture-handler'
 import {createStackNavigator} from '@react-navigation/stack'
-import {NavigationContainer, DarkTheme as NavigationDarkTheme,DefaultTheme as NavigationDefaultTheme,} from '@react-navigation/native';
-import {DarkTheme as PaperDarkTheme, DefaultTheme as PaperDefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import React, {useState} from 'react'
+import {NavigationContainer, 
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme} from '@react-navigation/native';
+import {DarkTheme as PaperDarkTheme,
+  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider} from 'react-native-paper';
 
-import { StyleSheet, View, Image } from 'react-native'
+import React from 'react'
+// import {enableScreens} from 'react-native-screens'
+
+import {Button } from 'react-native'
 import Header from './Global/Header'
+
+import { CurrentFisherProvider } from './assets/CurrentFisher';
 
 import Home from './Pages/Home'
 import LiveWell from './Pages/LiveWell'
@@ -16,6 +24,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore'
 import 'firebase/database'
 import 'firebase/auth'
+
   // Set the configuration for your app
   // TODO: Replace with your project's config object
   var config = {
@@ -31,37 +40,49 @@ import 'firebase/auth'
 }
 
   const Stack = createStackNavigator();
+  // enableScreens();
 
   const App = () => {
 
     return(
     <PaperProvider theme={combinedDefaultTheme}>
       <NavigationContainer theme = {combinedDefaultTheme}>
+        <CurrentFisherProvider>
         <Stack.Navigator initialRouteName = "Home">
           <Stack.Screen 
               name="Home"
               component={Home} 
-              options={{ title: 
-                  'test'}
-              } 
+              options={({ navigation, route }) => ({
+                headerTitle: props => <Header {...props} />,
+              })}
               />
           <Stack.Screen 
               name="LiveWell"
               component={LiveWell} 
+              options={{
+                headerTitle: props => <Header {...props} />
+                }}
               />
           <Stack.Screen
               name="ChooseFisher"
               component={ChooseFisher}
+              options={{
+                headerTitle: props => <Header {...props} />
+                }}
               />
           <Stack.Screen
               name="Replace"
               component={Replace}
+              options={{
+                headerTitle: props => <Header {...props} />
+                }}
               />
           {/* <Stack.Screen
               name="Header"
               component={Header} 
               />    */}
         </Stack.Navigator>  
+        </CurrentFisherProvider>
       </NavigationContainer>
      </PaperProvider>
     )}
