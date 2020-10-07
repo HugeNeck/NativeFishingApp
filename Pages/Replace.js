@@ -1,13 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Button, Text, TextInput, View} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import LiveWellData from '../assets/LiveWellData';
 import PicTaker from '../assets/PicTaker'
 import styles from '../assets/styles'
-import * as ImagePicker from 'expo-image-picker';
-import firebase from 'firebase/app';
-import 'firebase/firebase-storage'
 
+import firebase from 'firebase/app'
+import 'firebase/database'
+import 'firebase/auth'
+
+import {CurrentFisherContext} from '../assets/CurrentFisher'
 import Header from '../Global/Header';
 
   // Get a reference to the database service
@@ -21,25 +23,44 @@ export default function Replace({navigation}) {
     const [fishWeight, setFishWeight] = useState()
     const [fishType, setFishType] = useState(LiveWellData[0].fishType)
 
-    async function handleSubmit(){
-        let result = await ImagePicker.launchCameraAsync();
-        if (!result.cancelled) {
-            uploadImage(result.uri, "testImage3")
-            .then( () => {
-                console.log("SUCCESS")
-            })
-            .catch((error) => {
-                console.log("FAILED" + error)
-            })
-        }
-    }
+    const [currentFisher, setCurrentFisher] = useContext(CurrentFisherContext);
+    // async function handleSubmit(){
+    //     let result = await ImagePicker.launchCameraAsync();
+    //     if (!result.cancelled) {
+    //         uploadImage(result.uri, "testImage3")
+    //         .then( () => {
+    //             console.log("SUCCESS")
+    //         })
+    //         .catch((error) => {
+    //             console.log("FAILED" + error)
+    //         })
+    //     }
+    // }
 
-    async function uploadImage(uri, name){
-        const response = await fetch(uri);
-        const blob = await response.blob();
-        var ref = firebase.storage().ref().child("images/" + name);
-        return ref.put(blob);
-      }
+    // async function uploadImage(uri, name){
+    //     const response = await fetch(uri);
+    //     const blob = await response.blob();
+    //     var ref = firebase.storage().ref().child("images/" + name);
+    //     return ref.put(blob);
+    //   }
+
+    // function storeFishData() {
+    //     if (user != null) {
+    //       firebase.database().ref('users/' + user.uid).set({
+    //         highscore: score
+    //       });
+    //     }
+    //   }
+
+    function submitFish() {
+        if(currentFisher === 'Joel')
+        firebase.database().ref('users/' + "nH32Rcx6CugwwtcI5V5ggrszQOH3" ).push({
+            fishType: fishType,
+            fishWeight: fishWeight,
+            fishLength: fishLength,
+            fisher: firebase.auth().currentUser.displayName
+        })
+    }
 
     useEffect(
         () =>{      
@@ -56,7 +77,10 @@ export default function Replace({navigation}) {
         navigation.setOptions({
             headerTitle: () => (
                 <Header path={ () => navigation.navigate("ChooseFisher")} />
-            ) 
+            ),
+            headerRight: () => (
+                <Button title="submitFish" onPress={submitFish}/>
+            )      
         })
     })
                 return(
@@ -90,12 +114,9 @@ export default function Replace({navigation}) {
                                 value={fishWeight}
                                 keyboardType='number-pad'
                                 onChangeText={setFishWeight}/>  
-                            </View>
-                            <View style={styles.weatherContainer} >
-                            <PicTaker/> 
-                            <View style={styles.space} />
-                            <Button title= "Take New Picture" onPress = {handleSubmit}/>
-                            <View style={styles.space} />       
+                        </View>
+                        <PicTaker/>             
+                            <View style={styles.weatherContainer} >  
                             <Text style={styles.weather}>Current Weather: {weatherData}</Text>     
                             </View>
                     </View>

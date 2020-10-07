@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 
+
 import {CurrentFisherContext} from '../assets/CurrentFisher'
+
 
 export default function Header(props) {
 
-    const [currentFisher, setFisher] = useContext(CurrentFisherContext);
+    const [currentFisher, setCurrentFisher] = useContext(CurrentFisherContext);
 
     return(
         <View>

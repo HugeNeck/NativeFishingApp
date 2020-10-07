@@ -1,25 +1,31 @@
 import React, { useContext } from 'react';
-import { StyleSheet, TextInput, View} from 'react-native';
+import {Text, View} from 'react-native';
+import { RadioButton } from 'react-native-paper';
 
 import {CurrentFisherContext} from '../assets/CurrentFisher'
 
+
 const ChooseFisher = () => {
 
-    const [currentFisher, setFisher] = useContext(CurrentFisherContext);
+    const [checked, setChecked] = useContext(CurrentFisherContext);
 
     return (
-        <View>
-            <TextInput style = {styles.textStyle}
-            defaultValue={currentFisher}
-            onChangeText={setFisher}/>
-        </View>
+       <View>
+        <Text>Change Fisher: </Text>
+        <Text> Joel: </Text>
+       <RadioButton
+       value="Joel"
+       status={ checked === 'Joel' ? 'checked' : 'unchecked' }
+       onPress={() => setChecked('Joel')}
+       />
+        <Text> Dan: </Text>
+       <RadioButton
+        value="Dan"
+        status={ checked === 'Dan' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('Justin')}
+       />
+       </View>
     )
 }
-
-const styles = StyleSheet.create({
-    textStyle: {
-        color:"red"
-    }
-})
 
 export default ChooseFisher

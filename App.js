@@ -17,7 +17,6 @@ import Home from './Pages/Home'
 import LiveWell from './Pages/LiveWell'
 import ChooseFisher from'./Pages/ChooseFisher'
 import Replace from './Pages/Replace'
-
 import firebase from 'firebase/app';
 import 'firebase/firestore'
 import 'firebase/database'

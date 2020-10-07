@@ -5,13 +5,13 @@ export default StyleSheet.create({
         flex:1,
         justifyContent: 'center',
         alignItems: 'stretch',
-        padding: 16
+        padding: 12
       },
       centerContainer: {
         flex: 2,
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
-        flexGrow: 1
+        flexShrink: 1
       },
       space: {
         height: 10, 
@@ -22,11 +22,11 @@ export default StyleSheet.create({
         height: 100,
       },
       title: {
-        flex: 1,
+        flex: .3,
         alignSelf: 'center',
         fontWeight: "bold" ,
         fontSize: 20,
-        color: 'red'
+        color: 'red',
       },
       input: {
         color: 'red'
@@ -46,7 +46,15 @@ export default StyleSheet.create({
        fontSize: 17
       },
       weatherContainer: {
+        flex: .7,
+        justifyContent: 'flex-end',
+        flexShrink: 1
+       },
+
+      pictureContainer: {
         flex: 1,
-        justifyContent: 'flex-end'
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexGrow: 3
        }
   })

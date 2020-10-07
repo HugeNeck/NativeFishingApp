@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Image, View, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import styles from '../assets/styles'
 
 export default function PicTaker() {
   const [image, setImage] = useState(null);
@@ -15,6 +16,16 @@ export default function PicTaker() {
       }
     })();
   }, []);
+
+   const newImage = async () => {
+    let result = await ImagePicker.launchCameraAsync();
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -32,9 +43,14 @@ export default function PicTaker() {
   };
 
   return (
-    <View>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
+    <View style={styles.pictureContainer}>
+       <View style={styles.space}/>
+      <Button title="Pick an image from camera roll" onPress={pickImage} />   
+      <View style={styles.space}/>
+      <Button title="Take a New Picture" onPress={newImage} />
+      <View style={styles.space}/>
       {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+      {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
     </View>
   );
 }

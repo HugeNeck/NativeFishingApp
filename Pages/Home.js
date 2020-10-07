@@ -5,13 +5,14 @@ import Header from '../Global/Header';
 import fishIcon from '../assets/fishIcon.jpg'
 import styles from '../assets/styles'
 
+
 // import {CurrentFisherContext} from '../assets/CurrentFisher'
 
 const Home = ({navigation}) => {
     
     // const [currentFisher, setCurrentFisher] = useContext(CurrentFisherContext)
 
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
         navigation.setOptions({
             headerTitle: () => (
                 <Header path={ () => navigation.navigate("ChooseFisher")} />
