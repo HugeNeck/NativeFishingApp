@@ -60,38 +60,44 @@ export default function Replace({navigation}) {
         })
     })
                 return(
-                    <View style={styles.replaceScreenContainer}>    
-                        <Text>Choose a Fish</Text>         
-                        <View>     
-                            <Picker style={styles.picker} 
-                              onValueChange={ (value, index) =>setFishType(value)}
-                              selectedValue= {fishType}>         
-                                {LiveWellData.map(fish => 
-                                <Picker.Item  
-                                key= {fish.fishType} label={fish.fishType}  value={fish.fishType} /> 
-                                )}             
-                          </Picker>    
-                    </View>   
-                    <Text>Size of Fish in Inches:</Text>
-                    <TextInput 
-                        style={styles.input}
-                        placeholder="0"
-                        value={fishLength}
-                        keyboardType='number-pad'
-                        onChangeText={setFishLength}/>              
-                    <Text>Weight of Fish in Pounds:</Text>
-                    <TextInput
-                        style={styles.input}          
-                        placeholder="0"
-                        value={fishWeight}
-                        keyboardType='number-pad'
-                        onChangeText={setFishWeight}/>             
-                    <Text>Take or Upload Picture: </Text>                             
-                    <PicTaker/>    
-                    <View style={styles.space} />
-                    <Button title= "Take New Picture" onPress = {handleSubmit}/>
-                    <View style={styles.space} />       
-                    <Text>Current Weather:{weatherData}</Text>     
+                    <View style={styles.screenContainer}>    
+                        <Text style={styles.title}>Add a Fish to the Well!</Text>  
+                        <View style={styles.centerContainer}>    
+                            <View style={styles.pickerContainer}>  
+                                <Text>Choose a Fish:</Text>          
+                                    <Picker style={styles.picker} 
+                                    onValueChange={ (value, index) =>setFishType(value)}
+                                    selectedValue= {fishType}>         
+                                        {LiveWellData.map(fish => 
+                                        <Picker.Item  
+                                        key= {fish.fishType} label={fish.fishType}  value={fish.fishType} /> 
+                                        )}             
+                                </Picker>    
+                            </View>                                         
+                            <Text>Size of Fish in Inches:  </Text>
+                            <TextInput 
+                                style={styles.input}
+                                placeholder="0"
+                                placeholderTextColor='red'
+                                value={fishLength}
+                                keyboardType='number-pad'
+                                onChangeText={setFishLength}/>            
+                            <Text>Weight of Fish in Pounds:  </Text>
+                            <TextInput
+                                style={styles.input}          
+                                placeholder="0"
+                                placeholderTextColor='red'
+                                value={fishWeight}
+                                keyboardType='number-pad'
+                                onChangeText={setFishWeight}/>  
+                            </View>
+                            <View style={styles.weatherContainer} >
+                            <PicTaker/> 
+                            <View style={styles.space} />
+                            <Button title= "Take New Picture" onPress = {handleSubmit}/>
+                            <View style={styles.space} />       
+                            <Text style={styles.weather}>Current Weather: {weatherData}</Text>     
+                            </View>
                     </View>
                 )
     }

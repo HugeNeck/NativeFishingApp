@@ -10,11 +10,9 @@ import {DarkTheme as PaperDarkTheme,
 import React from 'react'
 // import {enableScreens} from 'react-native-screens'
 
-import {Button } from 'react-native'
-import Header from './Global/Header'
-
+import Header from './Global/Header';
+import Login from './Pages/Login';
 import { CurrentFisherProvider } from './assets/CurrentFisher';
-
 import Home from './Pages/Home'
 import LiveWell from './Pages/LiveWell'
 import ChooseFisher from'./Pages/ChooseFisher'
@@ -48,27 +46,34 @@ import 'firebase/auth'
     <PaperProvider theme={combinedDefaultTheme}>
       <NavigationContainer theme = {combinedDefaultTheme}>
         <CurrentFisherProvider>
-        <Stack.Navigator initialRouteName = "Home">
+        <Stack.Navigator initialRouteName = "Login">
+        <Stack.Screen 
+              name="Login"
+              component={Login} 
+              // options={({ navigation, route }) => ({
+              //   headerTitle: props => <Header {...props} />,
+              // })}
+              />
           <Stack.Screen 
               name="Home"
               component={Home} 
-              options={({ navigation, route }) => ({
-                headerTitle: props => <Header {...props} />,
-              })}
+              // options={({ navigation, route }) => ({
+              //   headerTitle: props => <Header {...props} />,
+              // })}
               />
           <Stack.Screen 
               name="LiveWell"
               component={LiveWell} 
-              options={{
-                headerTitle: props => <Header {...props} />
-                }}
+              // options={{
+              //   headerTitle: props => <Header {...props} />
+              //   }}
               />
           <Stack.Screen
               name="ChooseFisher"
               component={ChooseFisher}
-              options={{
-                headerTitle: props => <Header {...props} />
-                }}
+              // options={{
+              //   headerTitle: props => <Header {...props} />
+              //   }}
               />
           <Stack.Screen
               name="Replace"
