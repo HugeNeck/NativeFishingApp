@@ -10,6 +10,9 @@ export default function Header(props) {
     const [currentFisher, setCurrentFisher] = useContext(CurrentFisherContext);
 
     return(
+
+       
+
         <View>
             <TouchableOpacity onPress={props.path}>
             <Text>

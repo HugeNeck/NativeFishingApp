@@ -8,10 +8,9 @@ export default StyleSheet.create({
         padding: 12
       },
       centerContainer: {
-        flex: 2,
-        justifyContent: 'center',
+        flex: 1,
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        flexShrink: 1
       },
       space: {
         height: 10, 
@@ -22,11 +21,11 @@ export default StyleSheet.create({
         height: 100,
       },
       title: {
-        flex: .3,
+        flex: .5,
         alignSelf: 'center',
         fontWeight: "bold" ,
         fontSize: 20,
-        color: 'red',
+        color: 'red'
       },
       input: {
         color: 'red'
@@ -34,11 +33,13 @@ export default StyleSheet.create({
       picker: {
         flex: 1,
         color: 'red',
+        justifyContent: 'center',
+        alignItems: 'center'
       },
       pickerContainer: {
         flexDirection: "row",
         justifyContent: 'center',
-        alignItems:'center'
+        alignItems:'center',
       },
       weather: {
        color: 'white',
@@ -48,13 +49,12 @@ export default StyleSheet.create({
       weatherContainer: {
         flex: .7,
         justifyContent: 'flex-end',
-        flexShrink: 1
+        alignItems: 'center'
        },
 
       pictureContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        flexGrow: 3
        }
   })

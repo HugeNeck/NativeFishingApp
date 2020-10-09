@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState, useLayoutEffect} from 'react';
 import {View, Text, TextInput ,Button, Alert} from 'react-native';
 
 import firebase from 'firebase/app'
 import 'firebase/database'
 import 'firebase/auth'
 
+import Header from '../Global/Header'
 import styles from '../assets/styles'
 
 export default function Login({navigation}) {
 
-    const [email, setEmail] = useState("vill0352@algonquinlive.com")
+    const [email, setEmail] = useState("joelvilleneuve77@gmail.com")
     const [password, setPassword] = useState("rodfather77")
 
     const onLoginPress = () => {
@@ -27,6 +28,23 @@ export default function Login({navigation}) {
             })
     }
 
+    const forgotPassword = () => {
+        firebase.auth().sendPasswordResetEmail(email)
+          .then( () =>
+            Alert.alert('Please check your email...')
+          ).catch(function (e) {
+            console.log(e)
+          })
+    }
+      
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: () => (
+                <Header/>
+            ) 
+        })
+    })
+
     return(
         <View style={styles.screenContainer}>
         <Text style={styles.weather}>Enter Email:  </Text>
@@ -43,6 +61,8 @@ export default function Login({navigation}) {
             placeholderTextColor='red'
             value={password}
             onChangeText={setPassword}/>   
+        <Button title="Forgot/Change Password" onPress={forgotPassword} />
+        <View style={styles.space}/>
         <Button title="Login" onPress={onLoginPress}/>
         </View>
     )

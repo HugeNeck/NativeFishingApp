@@ -77,9 +77,9 @@ import 'firebase/auth'
           <Stack.Screen
               name="Replace"
               component={Replace}
-              options={{
-                headerTitle: props => <Header {...props} />
-                }}
+              // options={{
+              //   headerTitle: props => <Header {...props} />
+              //   }}
               />
           {/* <Stack.Screen
               name="Header"
