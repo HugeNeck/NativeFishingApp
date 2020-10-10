@@ -46,10 +46,10 @@ export default function PicTaker(props) {
     <View style={styles.pictureContainer}>
        <View style={styles.space}/>
        {props.image && <Image source={{ uri: props.image }} style={{ width: 200, height: 200 }} />}
+       <View style={styles.space}/> 
       <Button title="Pick an image from camera roll" onPress={pickImage} />   
       <View style={styles.space}/>
       <Button title="Take a New Picture" onPress={newImage} />
-      <View style={styles.space}/> 
       {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
     </View>
   );

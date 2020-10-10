@@ -46,7 +46,7 @@ export default function Login({navigation}) {
     })
 
     return(
-        <View style={styles.screenContainer}>
+        <View style={styles.centerContainer}>
         <Text style={styles.weather}>Enter Email:  </Text>
         <TextInput  
             style={styles.input}    

@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { Alert, Button, Text, TextInput, View} from 'react-native';
 import {Picker} from '@react-native-community/picker';
-import LiveWellData from '../assets/LiveWellData';
 import PicTaker from '../assets/PicTaker'
 import styles from '../assets/styles'
 
@@ -15,64 +14,81 @@ import Header from '../Global/Header';
 
 
 export default function Replace({navigation}) {
-    let imageData
+
     let dataKey
+    let uid
+    let loggedBy
+    let loggedByUid
     const [image, setImage] = useState(null);
     const [fishLength, setFishLength] = useState()
-    const [fishWeight, setFishWeight] = useState()
-    const [fishType, setFishType] = useState('None Selected')
+    const [fishWeight, setFishWeight] = useState("0")
+    const [fishType, setFishType] = useState()
 
     const [currentFisher, setCurrentFisher] = useContext(CurrentFisherContext);
 
     function submitFish() {
+        loggedBy= firebase.auth().currentUser.email
+        loggedByUid = firebase.auth().currentUser.uid
         if(currentFisher === 'Joel'){
-            dataKey =firebase.database().ref('users/' + "u7FOtTJGasMlqIclUFNHuT0uCF72" ).push({
+            uid = "u7FOtTJGasMlqIclUFNHuT0uCF72"
+            // if(uid != loggedByUid) console.log('FYI- different Fisher!')
+            dataKey =firebase.database().ref('users/' + uid ).push({
                 fishType: fishType,
                 fishWeight: fishWeight,
                 fishLength: fishLength,
                 fisher: currentFisher,
                 // photoUri: "gs://fishingapp-36472.appspot.com/images/" + 'test2',
-                loggedBy: firebase.auth().currentUser.email
+                loggedBy: loggedBy
             }).key
+           
         } 
         else if(currentFisher === 'Justin'){
-            dataKey =firebase.database().ref('users/' + "euaOW4QZR1V5LsvRqXgF2A51Cam1" ).push({
+            uid="euaOW4QZR1V5LsvRqXgF2A51Cam1"
+            // if(uid != loggedByUid) console.log('FYI- different Fisher!')
+            dataKey =firebase.database().ref('users/' + uid).push({
                 fishType: fishType,
                 fishWeight: fishWeight,
                 fishLength: fishLength,
                 fisher: currentFisher,
                 // photoUri: imageData.uri,
-                loggedBy: firebase.auth().currentUser.email
+                loggedBy: loggedBy
             }).key
+          
         } 
         else if(currentFisher === 'Fez'){
-            dataKey =firebase.database().ref('users/' + "nH32Rcx6CugwwtcI5V5ggrszQOH3" ).push({
+            uid= "nH32Rcx6CugwwtcI5V5ggrszQOH3"
+            // if(uid != loggedByUid) console.log('FYI- different Fisher!')
+            dataKey =firebase.database().ref('users/' + uid ).push({
                 fishType: fishType,
                 fishWeight: fishWeight,
                 fishLength: fishLength,
                 fisher: currentFisher,
                 // photoUri: imageData.uri,
-                loggedBy: firebase.auth().currentUser.email
+                loggedBy: loggedBy
             }).key
+          
         } 
       
         else if(currentFisher === 'Dan'){
-            datakey= firebase.database().ref('users/' + "Hv3Ql8pSaBfV27hZzCfRnlbRfKx2" ).push({
+            uid= "Hv3Ql8pSaBfV27hZzCfRnlbRfKx2"
+            // if(uid != loggedByUid) console.log('FYI- different Fisher!')   
+            dataKey= firebase.database().ref('users/' + uid ).push({
                 fishType: fishType,
                 fishWeight: fishWeight,
                 fishLength: fishLength,
                 fisher: currentFisher,      
                 // photoUri: imageData.uri,
-                loggedBy: firebase.auth().currentUser.email
-            }).key
+                loggedBy: loggedBy
+            }).key                
         } 
-       Alert.alert("submission successful")
-       if (image != null)   
-       imageData = uploadImage(image, dataKey)
 
-        firebase.database().ref('users/u7FOtTJGasMlqIclUFNHuT0uCF72/' + dataKey).update({
-            photoUri: dataKey
-        })
+       Alert.alert("submission successful")
+       if (image != null) {  
+            uploadImage(image, dataKey)
+            firebase.database().ref('users/' + uid + '/' + dataKey).update({
+                photoUri: dataKey
+            })
+        }
     }
 
     async function uploadImage(uri, name){
@@ -96,12 +112,12 @@ export default function Replace({navigation}) {
                 return(
                     <View style={styles.screenContainer}>    
                         <Text style={styles.title}>Add a Fish to the Well!</Text>  
-                        <View style={styles.centerContainer}>    
-                            <View style={styles.pickerContainer}>  
+                        {/* <View style={styles.centerContainer}>     */}
+                        <View style={styles.pickerContainer}>  
                                 <Text>Fish to Add: </Text>      
                                 <TextInput 
                                     style={styles.input}
-                                    placeholder="Add a Fish"
+                                    placeholder="Type Here"
                                     placeholderTextColor='red'
                                     value={fishType}
                                     onChangeText={setFishType}/>
@@ -113,8 +129,8 @@ export default function Replace({navigation}) {
                                             key= {fish.fishType} label={fish.fishType}  value={fish.fishType} /> 
                                     )}        
                             </Picker>   */}
-                            </View>              
-                            <View style={styles.pickerContainer}>                             
+                        </View>              
+                        <View style={styles.pickerContainer}>                             
                             <Text>Size of Fish in Inches:  </Text>
                             <TextInput 
                                 style={styles.input}
@@ -123,8 +139,8 @@ export default function Replace({navigation}) {
                                 value={fishLength}
                                 keyboardType='number-pad'
                                 onChangeText={setFishLength}/>     
-                                </View>       
-                            <View style={styles.pickerContainer}>
+                        </View>       
+                        <View style={styles.pickerContainer}>
                             <Text>Weight of Fish in Pounds:  </Text>
                             <TextInput
                                 style={styles.input}          
@@ -133,7 +149,7 @@ export default function Replace({navigation}) {
                                 value={fishWeight}
                                 keyboardType='number-pad'
                                 onChangeText={setFishWeight}/>  
-                                </View>
+                            {/* </View> */}
                         </View>
                         <PicTaker image={image} setImage={setImage}/>             
                         </View>

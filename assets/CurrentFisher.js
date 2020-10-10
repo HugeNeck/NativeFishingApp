@@ -36,7 +36,7 @@ export const CurrentFisherProvider = props => {
         console.log("SOMETHING WENT WRONG")
             } 
         }) 
-        return unsubscribe
+        return () => unsubscribe()
     },[])
 
     return(

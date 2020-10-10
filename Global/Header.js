@@ -11,8 +11,6 @@ export default function Header(props) {
 
     return(
 
-       
-
         <View>
             <TouchableOpacity onPress={props.path}>
             <Text>

@@ -1,8 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+
+const height = Dimensions.get('window').height
 
 export default StyleSheet.create({
     screenContainer: {
-        flex:1,
+        height: height,
         justifyContent: 'center',
         alignItems: 'stretch',
         padding: 12
@@ -10,7 +13,7 @@ export default StyleSheet.create({
       centerContainer: {
         flex: 1,
         justifyContent: 'flex-start',
-        alignItems: 'center',
+        alignItems: 'center'
       },
       space: {
         height: 10, 
@@ -48,13 +51,19 @@ export default StyleSheet.create({
       },
       weatherContainer: {
         flex: .7,
-        justifyContent: 'flex-end',
-        alignItems: 'center'
-       },
-
-      pictureContainer: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingBottom: 30
+       },
+      pictureContainer: {
+        flex: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 20,
+       },
+       buttonContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'stretch'
        }
   })
