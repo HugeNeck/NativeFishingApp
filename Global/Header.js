@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 
 
-import {CurrentFisherContext} from '../assets/CurrentFisher'
+import {CurrentFisherContext} from '../Global/CurrentFisher'
 
 
 export default function Header(props) {

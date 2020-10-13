@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React, {useState, useLayoutEffect, useEffect} from 'react';
 import {View, Text, TextInput ,Button, Alert} from 'react-native';
 
 import firebase from 'firebase/app'
@@ -8,17 +8,22 @@ import 'firebase/auth'
 import Header from '../Global/Header'
 import styles from '../assets/styles'
 
+import * as SecureStore from 'expo-secure-store';
+
 export default function Login({navigation}) {
 
-    const [email, setEmail] = useState("joelvilleneuve77@gmail.com")
-    const [password, setPassword] = useState("rodfather77")
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
 
     const onLoginPress = () => {
+        SecureStore.setItemAsync("savedEmail", email)
+        SecureStore.setItemAsync("savedpassword", password)
         firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
             .then((response) => {
                 const uid = response.user.uid
+                
                 Alert.alert("SUCCESS" + " userID: " + uid)
                 navigation.navigate('Home',
                 {uid : uid})
@@ -44,6 +49,14 @@ export default function Login({navigation}) {
             ) 
         })
     })
+    
+    useEffect( () => {
+        const savedEmail =  SecureStore.getItemAsync("savedEmail")
+        const savedPassword = SecureStore.getItemAsync("savedPassword")
+
+        savedEmail.then(savedEmail === null ? setEmail(savedEmail) : null) 
+        savedPassword.then(savedPassword === null? setPassword( savedPassword): null)
+    },[])
 
     return(
         <View style={styles.centerContainer}>

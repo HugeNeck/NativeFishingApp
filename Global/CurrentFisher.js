@@ -30,10 +30,10 @@ export const CurrentFisherProvider = props => {
                     // firebase.auth().currentUser.updateProfile({displayName: 'Dan'})
                     setCurrentFisher('Dan')
                 }
-                else("nickname not found")
+                else{setCurrentFisher("Not Yet Logged In")}
             }
             else {
-        console.log("SOMETHING WENT WRONG")
+                   setCurrentFisher("Logged Out")
             } 
         }) 
         return () => unsubscribe()

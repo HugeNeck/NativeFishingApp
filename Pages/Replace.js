@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Alert, Button, Text, TextInput, View} from 'react-native';
+import { Alert, Button, Text, TextInput, View, BackHandler} from 'react-native';
 import {Picker} from '@react-native-community/picker';
-import PicTaker from '../assets/PicTaker'
+import PicTaker from '../Global/PicTaker'
 import styles from '../assets/styles'
 
 import firebase from 'firebase/app'
@@ -9,11 +9,11 @@ import 'firebase/storage'
 import 'firebase/database'
 import 'firebase/auth'
 
-import {CurrentFisherContext} from '../assets/CurrentFisher'
+import {CurrentFisherContext} from '../Global/CurrentFisher'
 import Header from '../Global/Header';
 
 
-export default function Replace({navigation}) {
+export default function Replace({navigation, route}) {
 
     let dataKey
     let uid
@@ -108,6 +108,20 @@ export default function Replace({navigation}) {
             )      
         })
     })
+
+
+    useEffect(() => {
+        const backAction = () => { 
+            if(route.name === 'Replace'){
+                   navigation.pop()
+                    return true;
+            } else{return false}
+        }
+
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+        return () => backHandler.remove();
+      }, []);
  
                 return(
                     <View style={styles.screenContainer}>    

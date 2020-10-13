@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Text, FlatList, View } from 'react-native';
+import { Text, FlatList, View, BackHandler} from 'react-native';
 import Header from '../Global/Header';
 import styles from '../assets/styles'
 
@@ -10,7 +10,7 @@ import 'firebase/storage'
 import 'firebase/database'
 import 'firebase/auth'
 
-export default function LiveWell({navigation}){
+export default function LiveWell({navigation, route}){
  
     // const [fishArray, setFishArray] = useState([])
     const [isLoading, setisLoading] = useState(true)
@@ -56,6 +56,20 @@ export default function LiveWell({navigation}){
     })
 
   
+    useEffect(() => {
+        const backAction = () => { 
+            console.log(route.name)
+            if(route.name === 'LiveWell'){
+                   navigation.pop()
+                    return true;
+            } else{return false}
+        }
+
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+        return () => backHandler.remove();
+      }, []);
+
     return(
     <View style={styles.screenContainer}> 
     <Text style={styles.title}>5 Biggest Fish Each!</Text>

@@ -1,19 +1,32 @@
 import React, {useState, useEffect, useLayoutEffect} from 'react';
-import {View, Text, Button, Image} from 'react-native';
+import {View, Text, Button, Image, BackHandler, Alert, Platform} from 'react-native';
 // import { ScreenContainer } from 'react-native-screens';
+import {HeaderBackButton} from '@react-navigation/stack'
 import Header from '../Global/Header';
 import fishIcon from '../assets/fishIcon.jpg'
 import styles from '../assets/styles'
 
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 // import {CurrentFisherContext} from '../assets/CurrentFisher'
 
-const Home = ({navigation}) => {
-    
+const Home = ({navigation, route}) => {
+
+ 
     // const [currentFisher, setCurrentFisher] = useContext(CurrentFisherContext)
 
     useLayoutEffect(() => {
-        navigation.setOptions({
+        navigation.setOptions({ 
+                headerLeft: (props) => (
+                  <HeaderBackButton
+                    {...props}
+                    onPress={() => {
+                      firebase.auth().signOut()
+                      navigation.navigate("Login")
+                    }}
+                  />
+                ),
             headerTitle: () => (
                 <Header path={ () => navigation.navigate("ChooseFisher")} />
             ) 
@@ -22,6 +35,7 @@ const Home = ({navigation}) => {
 
     const [weatherData, setWeatherData] = useState('Loading')
 
+    //this seems to work without useEffect. Not sure exactly why its recommended?
     useEffect(
         () =>{      
             fetch("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=json&units=metric%22")
@@ -33,6 +47,30 @@ const Home = ({navigation}) => {
             })
     },[])
 
+    const handleBackButton = () =>{
+        firebase.auth().signOut()
+        navigation.navigate('Login')   
+    }
+
+    useEffect(() => {
+        const backAction = () => { 
+            if(route.name === 'Home'){
+                    Alert.alert('Going back will Logout', 'Are you sure you want to go back?', [
+                        {
+                        text: 'Cancel',
+                        onPress: () => null,
+                        style: 'cancel',
+                        },
+                        { text: 'YES', onPress: handleBackButton},
+                    ]);
+                    return true;
+            } else{return false}
+        }
+
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+        return () => backHandler.remove();
+      }, []);
 
     return (
     <View style={styles.screenContainer}>

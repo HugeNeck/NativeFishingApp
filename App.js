@@ -10,9 +10,8 @@ import {DarkTheme as PaperDarkTheme,
 import React from 'react'
 // import {enableScreens} from 'react-native-screens'
 
-import Header from './Global/Header';
 import Login from './Pages/Login';
-import { CurrentFisherProvider } from './assets/CurrentFisher';
+import { CurrentFisherProvider } from './Global/CurrentFisher';
 import Home from './Pages/Home'
 import LiveWell from './Pages/LiveWell'
 import ChooseFisher from'./Pages/ChooseFisher'
@@ -49,16 +48,10 @@ import 'firebase/auth'
         <Stack.Screen 
               name="Login"
               component={Login} 
-              // options={({ navigation, route }) => ({
-              //   headerTitle: props => <Header {...props} />,
-              // })}
               />
           <Stack.Screen 
               name="Home"
               component={Home} 
-              // options={({ navigation, route }) => ({
-              //   headerTitle: props => <Header {...props} />,
-              // })}
               />
           <Stack.Screen 
               name="LiveWell"
