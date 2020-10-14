@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Alert, Button, Text, TextInput, View, BackHandler} from 'react-native';
+import { Alert, SafeAreaView, Text, TextInput, View, BackHandler} from 'react-native';
 import {Picker} from '@react-native-community/picker';
+import { Button } from 'react-native-paper';
 import PicTaker from '../Global/PicTaker'
 import styles from '../assets/styles'
 
@@ -13,22 +14,30 @@ import {CurrentFisherContext} from '../Global/CurrentFisher'
 import Header from '../Global/Header';
 
 
-export default function Replace({navigation, route}) {
+export default function Replace({route, navigation}) {
 
     let dataKey
     let uid
     let loggedBy
-    let loggedByUid
+    // let loggedByUid
     const [image, setImage] = useState(null);
     const [fishLength, setFishLength] = useState()
-    const [fishWeight, setFishWeight] = useState("0")
+    const [fishWeight, setFishWeight] = useState()
     const [fishType, setFishType] = useState()
+
+    const {weather} = route.params;
 
     const [currentFisher, setCurrentFisher] = useContext(CurrentFisherContext);
 
     function submitFish() {
         loggedBy= firebase.auth().currentUser.email
-        loggedByUid = firebase.auth().currentUser.uid
+        if(!fishWeight) {setFishWeight("0")}
+        if(!fishLength) {setFishLength("0")}
+        if(!fishType) {Alert.alert("Must Select Fish Type")
+        return }
+        if(!image){Alert.alert("Please add image")
+        return }
+        // loggedByUid = firebase.auth().currentUser.uid
         if(currentFisher === 'Joel'){
             uid = "u7FOtTJGasMlqIclUFNHuT0uCF72"
             // if(uid != loggedByUid) console.log('FYI- different Fisher!')
@@ -38,7 +47,8 @@ export default function Replace({navigation, route}) {
                 fishLength: fishLength,
                 fisher: currentFisher,
                 // photoUri: "gs://fishingapp-36472.appspot.com/images/" + 'test2',
-                loggedBy: loggedBy
+                loggedBy: loggedBy,
+                weatherData: weather
             }).key
            
         } 
@@ -51,7 +61,8 @@ export default function Replace({navigation, route}) {
                 fishLength: fishLength,
                 fisher: currentFisher,
                 // photoUri: imageData.uri,
-                loggedBy: loggedBy
+                loggedBy: loggedBy,
+                weatherData: weatherData
             }).key
           
         } 
@@ -64,7 +75,8 @@ export default function Replace({navigation, route}) {
                 fishLength: fishLength,
                 fisher: currentFisher,
                 // photoUri: imageData.uri,
-                loggedBy: loggedBy
+                loggedBy: loggedBy,
+                weatherData: weatherData
             }).key
           
         } 
@@ -78,11 +90,13 @@ export default function Replace({navigation, route}) {
                 fishLength: fishLength,
                 fisher: currentFisher,      
                 // photoUri: imageData.uri,
-                loggedBy: loggedBy
+                loggedBy: loggedBy,
+                weatherData: weatherData
             }).key                
         } 
 
        Alert.alert("submission successful")
+       
        if (image != null) {  
             uploadImage(image, dataKey)
             firebase.database().ref('users/' + uid + '/' + dataKey).update({
@@ -104,12 +118,12 @@ export default function Replace({navigation, route}) {
                 <Header path={ () => navigation.navigate("ChooseFisher")} />
             ),
             headerRight: () => (
-                <Button title="submitFish" onPress={submitFish}/>
+                <Button onPress={submitFish}>Submit Fish</Button> 
             )      
         })
     })
 
-
+    if(Platform.OS === 'android'){
     useEffect(() => {
         const backAction = () => { 
             if(route.name === 'Replace'){
@@ -122,9 +136,9 @@ export default function Replace({navigation, route}) {
 
         return () => backHandler.remove();
       }, []);
- 
+    }
                 return(
-                    <View style={styles.screenContainer}>    
+                    <SafeAreaView style={styles.screenContainer}>    
                         <Text style={styles.title}>Add a Fish to the Well!</Text>  
                         {/* <View style={styles.centerContainer}>     */}
                         <View style={styles.pickerContainer}>  
@@ -166,6 +180,6 @@ export default function Replace({navigation, route}) {
                             {/* </View> */}
                         </View>
                         <PicTaker image={image} setImage={setImage}/>             
-                        </View>
+                        </SafeAreaView>
                 )
     }

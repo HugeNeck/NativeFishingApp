@@ -57,7 +57,7 @@ const ChooseFisher = ({navigation, route}) => {
         setImage(Justin)
     }
 
-
+    if(Platform.OS === 'android'){
     useEffect(() => {
         const backAction = () => { 
             if(route.name === 'ChooseFisher'){
@@ -70,7 +70,8 @@ const ChooseFisher = ({navigation, route}) => {
 
         return () => backHandler.remove();
       }, []);
-
+    }
+    
     return (
        <View style={styles.screenContainer}>
         <Text>Change Fisher: </Text>

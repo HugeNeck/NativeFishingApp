@@ -28,7 +28,8 @@ export default StyleSheet.create({
         alignSelf: 'center',
         fontWeight: "bold" ,
         fontSize: 20,
-        color: 'red'
+        color: 'red',
+        flexShrink: 1
       },
       input: {
         color: 'red'
@@ -65,5 +66,11 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'stretch'
+       },
+       LiveWellContainer: {
+        flex: 3,
+        justifyContent: 'flex-start',
+        alignItems: 'stretch',
+        flexGrow : 3
        }
   })

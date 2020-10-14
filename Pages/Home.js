@@ -52,26 +52,27 @@ const Home = ({navigation, route}) => {
         navigation.navigate('Login')   
     }
 
-    useEffect(() => {
-        const backAction = () => { 
-            if(route.name === 'Home'){
-                    Alert.alert('Going back will Logout', 'Are you sure you want to go back?', [
-                        {
-                        text: 'Cancel',
-                        onPress: () => null,
-                        style: 'cancel',
-                        },
-                        { text: 'YES', onPress: handleBackButton},
-                    ]);
-                    return true;
-            } else{return false}
-        }
+    if(Platform.OS === 'android'){
+        useEffect(() => {
+            const backAction = () => { 
+                if(route.name === 'Home'){
+                        Alert.alert('Going back will Logout', 'Are you sure you want to go back?', [
+                            {
+                            text: 'Cancel',
+                            onPress: () => null,
+                            style: 'cancel',
+                            },
+                            { text: 'YES', onPress: handleBackButton},
+                        ]);
+                        return true;
+                } else{return false}
+            }
+    
+            const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
-        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-
-        return () => backHandler.remove();
-      }, []);
-
+            return () => backHandler.remove();
+        }, []);
+    }
     return (
     <View style={styles.screenContainer}>
         <Text style={styles.title}>Welcome To the LiveWell App!</Text> 
@@ -85,7 +86,11 @@ const Home = ({navigation, route}) => {
         <View style={styles.space} />
             <Button
                 title="Replace Fish in Well"
-                onPress={()=> navigation.navigate("Replace")} /> 
+                onPress={()=> {
+                    {
+                        navigation.navigate("Replace", {weather : weatherData.toString()})
+                    }
+                }}/> 
         </View>
         <View style={styles.weatherContainer}>  
         <Text style={styles.weather}>Current Weather: {weatherData}</Text>     

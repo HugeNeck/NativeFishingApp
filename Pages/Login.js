@@ -12,8 +12,8 @@ import * as SecureStore from 'expo-secure-store';
 
 export default function Login({navigation}) {
 
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [email, setEmail] = useState("joelvilleneuve77@gmail.com")
+    const [password, setPassword] = useState("rodfather77")
 
     const onLoginPress = () => {
         SecureStore.setItemAsync("savedEmail", email)
