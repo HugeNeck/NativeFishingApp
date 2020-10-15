@@ -71,6 +71,6 @@ export default StyleSheet.create({
         flex: 3,
         justifyContent: 'flex-start',
         alignItems: 'stretch',
-        flexGrow : 3
+        flexGrow : 5,
        }
   })

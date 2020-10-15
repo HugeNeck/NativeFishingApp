@@ -1,5 +1,5 @@
 import React, {useState, useLayoutEffect, useEffect} from 'react';
-import {View, Text, TextInput ,Button, Alert} from 'react-native';
+import {View, Text, TextInput ,Button, Alert, Platform} from 'react-native';
 
 import firebase from 'firebase/app'
 import 'firebase/database'
@@ -16,8 +16,10 @@ export default function Login({navigation}) {
     const [password, setPassword] = useState("rodfather77")
 
     const onLoginPress = () => {
+        if(Platform.OS !== 'web'){
         SecureStore.setItemAsync("savedEmail", email)
         SecureStore.setItemAsync("savedpassword", password)
+        }
         firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
@@ -51,11 +53,12 @@ export default function Login({navigation}) {
     })
     
     useEffect( () => {
+        if(Platform.OS !== 'web'){
         const savedEmail =  SecureStore.getItemAsync("savedEmail")
         const savedPassword = SecureStore.getItemAsync("savedPassword")
-
         savedEmail.then(savedEmail === null ? setEmail(savedEmail) : null) 
         savedPassword.then(savedPassword === null? setPassword( savedPassword): null)
+    }
     },[])
 
     return(

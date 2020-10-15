@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, useLayoutEffect } from 'react';
-import {Image,Text, View, BackHandler} from 'react-native';
+import {Image,Text, View, BackHandler, Platform} from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import Header from '../Global/Header'
 import styles from '../assets/styles'

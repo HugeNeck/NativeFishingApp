@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Alert, SafeAreaView, Text, TextInput, View, BackHandler} from 'react-native';
+import { Alert, SafeAreaView, Text, TextInput, View, BackHandler, Platform} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import { Button } from 'react-native-paper';
 import PicTaker from '../Global/PicTaker'
@@ -62,7 +62,7 @@ export default function Replace({route, navigation}) {
                 fisher: currentFisher,
                 // photoUri: imageData.uri,
                 loggedBy: loggedBy,
-                weatherData: weatherData
+                weatherData: weather
             }).key
           
         } 
@@ -76,7 +76,7 @@ export default function Replace({route, navigation}) {
                 fisher: currentFisher,
                 // photoUri: imageData.uri,
                 loggedBy: loggedBy,
-                weatherData: weatherData
+                weatherData: weather
             }).key
           
         } 
@@ -91,7 +91,7 @@ export default function Replace({route, navigation}) {
                 fisher: currentFisher,      
                 // photoUri: imageData.uri,
                 loggedBy: loggedBy,
-                weatherData: weatherData
+                weatherData: weather
             }).key                
         } 
 

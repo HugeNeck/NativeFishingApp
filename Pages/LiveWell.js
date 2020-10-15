@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, Text, FlatList, View, BackHandler} from 'react-native';
+import {SafeAreaView, Text, FlatList, View, BackHandler, Platform} from 'react-native';
 import Header from '../Global/Header';
 import styles from '../assets/styles'
 import CatchItem from '../Global/CatchItem'
@@ -10,7 +10,6 @@ import firebase from 'firebase/app'
 import 'firebase/storage'
 import 'firebase/database'
 import 'firebase/auth'
-import { render } from 'react-dom';
 
 export default function LiveWell({navigation, route}){
  
@@ -35,6 +34,14 @@ export default function LiveWell({navigation, route}){
             }
         )
     },[])
+
+    // var ref = firebase.database().ref("users");
+    // var query = ref.orderByChild("database/username").equalTo("some_data");
+    // query.once("value", function(snapshot) {
+    // snapshot.forEach(function(child) {
+    //     console.log(child.key, child.val().bio);
+    // });
+    // });
  
     React.useLayoutEffect(() => {
         navigation.setOptions({
@@ -73,7 +80,7 @@ export default function LiveWell({navigation, route}){
                )
     } */}
     <FlatList data = {detailsArray} renderItem={(item) => <CatchItem value={item.item} />}
-    keyExtractor={(item, index) => index.toString()}/>
+    keyExtractor={(item, index) => index.toString()} horizontal/>
 
     {/* <View style={styles.centerContainer}> 
     {fishLengthDetails.map( item => 
@@ -98,7 +105,7 @@ export default function LiveWell({navigation, route}){
   
     </View>
     }
-
+    <View style={{flex:1}} />
      </SafeAreaView>
     )
 }
