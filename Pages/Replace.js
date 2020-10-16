@@ -123,8 +123,9 @@ export default function Replace({route, navigation}) {
         })
     })
 
-    if(Platform.OS === 'android'){
+  
     useEffect(() => {
+        if(Platform.OS === 'android'){
         const backAction = () => { 
             if(route.name === 'Replace'){
                    navigation.pop()
@@ -135,8 +136,9 @@ export default function Replace({route, navigation}) {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
         return () => backHandler.remove();
-      }, []);
-    }
+         }
+    }, []);
+    
                 return(
                     <SafeAreaView style={styles.screenContainer}>    
                         <Text style={styles.title}>Add a Fish to the Well!</Text>  
