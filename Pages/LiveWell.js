@@ -4,8 +4,6 @@ import Header from '../Global/Header';
 import styles from '../assets/styles'
 import CatchItem from '../Global/CatchItem'
 
-// import { DataTable} from 'react-native-paper';
-
 import firebase from 'firebase/app'
 import 'firebase/storage'
 import 'firebase/database'
@@ -21,12 +19,17 @@ export default function LiveWell({navigation, route}){
 
     useEffect( () => {
       let userId = firebase.auth().currentUser.uid; 
-      firebase.database().ref('/users/' + userId).once("value")
+      firebase.database().ref('/users/' + userId).orderByChild('fishType').once("value")
         .then(function(snapshot){
-            let fishObject  = snapshot.val()       
-                for (let fish in fishObject){
-                     combinedArray.push(fishObject[fish])
-                }
+                snapshot.forEach( (child) => {
+                    combinedArray.push({
+                        key: child.key,
+                        ...child.val()
+                    })
+                })   
+                // for (let fish in fishObject){
+                //      combinedArray.push(fishObject[fish])
+                // }
             setdetailsArray(combinedArray)
             setisLoading(false)
             }, function (error) {
