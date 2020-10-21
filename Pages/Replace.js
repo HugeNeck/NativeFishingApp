@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Alert, SafeAreaView, Text, TextInput, View, BackHandler, Platform} from 'react-native';
+import { Alert, TouchableHighlight, SafeAreaView, Text, TextInput, View, BackHandler, Platform} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import { Button } from 'react-native-paper';
 import PicTaker from '../Global/PicTaker'
@@ -21,18 +21,23 @@ export default function Replace({route, navigation}) {
     let loggedBy
     // let loggedByUid
     const [image, setImage] = useState(null);
-    const [fishLength, setFishLength] = useState()
-    const [fishWeight, setFishWeight] = useState()
+    const [fishLength, setFishLength] = useState("")
+    const [fishWeight, setFishWeight] = useState("")
     const [fishType, setFishType] = useState()
+
+    const combinedArray = []
+    const [unique, setUnique] = useState([])
 
     const {weather} = route.params;
 
     const [currentFisher, setCurrentFisher] = useContext(CurrentFisherContext);
 
+    const [clickedAddNew, setClickedAddNew] = useState(false)
+
     function submitFish() {
         loggedBy= firebase.auth().currentUser.email
-        if(!fishWeight) {setFishWeight("0")}
-        if(!fishLength) {setFishLength("0")}
+        // if(!fishWeight) {setFishWeight("0")}
+        // if(!fishLength) {setFishLength("0")}
         if(!fishType) {Alert.alert("Must Select Fish Type")
         return }
         if(!image){Alert.alert("Please add image")
@@ -138,28 +143,67 @@ export default function Replace({route, navigation}) {
         return () => backHandler.remove();
          }
     }, []);
+
+
+//SECTION FOR DEALING WITH PICKER (getting fish values)
+function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
+}
+
+
+useEffect( () => {
+     async function getAllFish(){
+        let tempArray = []
+        await firebase.database().ref('users').orderByChild('fishType').once("value")
+        .then(function(snapshot){
+                snapshot.forEach( person => {
+                    person.forEach( fish => {
+                        tempArray.push({
+                            key: fish.key,
+                            ...fish.val()})
+                    })
+                })
+                tempArray.forEach( fish => 
+                    combinedArray.push(fish.fishType)
+                )
+                setUnique(combinedArray.filter( onlyUnique ))
+            })
+    }
+    getAllFish()
+},[])
     
+function setClickedTrue(){
+    setClickedAddNew(true)
+    setFishType(null)
+}
+function setClickedFalse(){
+    setClickedAddNew(false)
+    // setFishType(null)
+}
+
+
                 return(
                     <SafeAreaView style={styles.screenContainer}>    
                         <Text style={styles.title}>Add a Fish to the Well!</Text>  
-                        {/* <View style={styles.centerContainer}>     */}
                         <View style={styles.pickerContainer}>  
-                                <Text>Fish to Add: </Text>      
-                                <TextInput 
-                                    style={styles.input}
-                                    placeholder="Type Here"
-                                    placeholderTextColor='red'
-                                    value={fishType}
-                                    onChangeText={setFishType}/>
-                            {/* <Picker style={styles.picker} 
+                            <Text>Fish to Add: </Text>      
+                            {clickedAddNew === false ? 
+                            <Picker style={styles.picker} 
                                     onValueChange={ (value, index) =>setFishType(value)}
-                                    selectedValue= {fishType}>         
-                                    {LiveWellData.map(fish => 
+                                    selectedValue= {fishType}>
+                                    {unique.map(fish => 
                                         <Picker.Item  
-                                            key= {fish.fishType} label={fish.fishType}  value={fish.fishType} /> 
+                                            key= {fish} label={fish} value={fish} /> 
                                     )}        
-                            </Picker>   */}
-                        </View>              
+                            </Picker>
+                        :  <TextInput 
+                        style={styles.input}
+                        placeholder="Type Here"
+                        placeholderTextColor='red'
+                        value={fishType}
+                        onChangeText={setFishType}/>}
+                        {clickedAddNew === false ?   <Button onPress={setClickedTrue}>NEW</Button> : <Button onPress={setClickedFalse}>List</Button> }
+                        </View>       
                         <View style={styles.pickerContainer}>                             
                             <Text>Size of Fish in Inches:  </Text>
                             <TextInput 
@@ -179,9 +223,10 @@ export default function Replace({route, navigation}) {
                                 value={fishWeight}
                                 keyboardType='number-pad'
                                 onChangeText={setFishWeight}/>  
-                            {/* </View> */}
                         </View>
                         <PicTaker image={image} setImage={setImage}/>             
                         </SafeAreaView>
                 )
     }
+
+

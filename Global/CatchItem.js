@@ -30,7 +30,3 @@ const CatchItem = ({value}) => {
 }
 
 export default CatchItem
-
-// https://firebasestorage.googleapis.com/v0/b/fishingapp-36472.appspot.com/o/images%2F-MJYtPFaCu-e7OBAKjHS?alt=media&token=96f002dc-7ec1-42e5-8369-f7db57039001
-
-// gs://fishingapp-36472.appspot.com/images/-MJYtPFaCu-e7OBAKjHS
